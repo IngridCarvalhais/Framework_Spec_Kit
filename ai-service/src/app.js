@@ -6,7 +6,7 @@ import { requestOpenAiScores } from './openai.js'
 import { buildPrioritization, validateTaskSnapshot } from './scoring.js'
 
 function requestProviderScores(tasks) {
-  const provider = (process.env.AI_PROVIDER || 'gemini').toLowerCase()
+  const provider = (process.env.AI_PROVIDER || 'openai').trim().toLowerCase()
   if (provider === 'gemini') return requestGeminiScores(tasks)
   if (provider === 'openai') return requestOpenAiScores(tasks)
   throw new ServiceError(503, 'AI_PROVIDER debe ser gemini u openai.')
