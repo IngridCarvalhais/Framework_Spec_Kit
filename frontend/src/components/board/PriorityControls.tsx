@@ -18,16 +18,16 @@ export function PriorityControls({ manual, aiActive, available, hasPendingTasks,
       </button>
       <span role="status">
         {busy
-          ? 'Gemini está analizando las tareas pendientes.'
+          ? 'La IA está analizando las tareas pendientes.'
           : loading
             ? 'Cargando tareas antes de priorizar.'
             : aiActive
               ? 'Ordenadas por relevancia sugerida por IA.'
               : available
                 ? hasPendingTasks
-                  ? 'Se enviarán títulos y descripciones a Gemini; la prioridad original no se modifica.'
+                  ? 'Se enviarán títulos y descripciones al servicio de IA; la prioridad original no se modifica.'
                   : 'No hay tareas pendientes para priorizar.'
-                : 'Configura el servicio local de Gemini para activar la priorización.'}
+                : 'Configura el servicio local de IA para activar la priorización.'}
       </span>
     </div>
   )
