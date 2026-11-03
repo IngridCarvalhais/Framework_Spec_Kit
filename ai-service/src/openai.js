@@ -77,10 +77,14 @@ export async function requestOpenAiScores(tasks, {
       }),
       signal: controller.signal,
     })
-  } catch {
+  } catch (error) {
     if (controller.signal.aborted) {
       throw new ServiceError(504, 'OpenAI superó el tiempo máximo de respuesta.')
     }
+    console.error('Falló la conexión con OpenAI:', {
+      name: error instanceof Error ? error.name : 'UnknownError',
+      code: error?.cause?.code,
+    })
     throw new ServiceError(503, 'No se pudo conectar con OpenAI.')
   } finally {
     clearTimeout(timeout)
