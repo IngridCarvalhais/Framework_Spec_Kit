@@ -60,15 +60,10 @@ descripciones de tareas se envían a Google Gemini. Las recomendaciones no se pe
 
 ```powershell
 Set-Location frontend
-npm test
-npm run test:e2e
 npm run lint
 npm run build
-
-Set-Location ..\ai-service
-npm test
 ```
 
-Las pruebas e2e del modo API utilizan MSW y no prueban una conexión con un backend real.
-Para más detalles sobre modos, limitaciones y accesibilidad, consulta
-[frontend/README.md](./frontend/README.md).
+La integración Gemini es opcional; requiere una clave propia y se configura en
+`ai-service/.env`, nunca en el frontend. El servicio local no autentica ni autoriza
+usuarios y no debe exponerse a Internet.
