@@ -2,9 +2,17 @@ import express from 'express'
 import { rateLimit } from 'express-rate-limit'
 import { ServiceError } from './errors.js'
 import { requestGeminiScores } from './gemini.js'
+import { requestOpenAiScores } from './openai.js'
 import { buildPrioritization, validateTaskSnapshot } from './scoring.js'
 
-export function createApp(scoreTasks = requestGeminiScores) {
+function requestProviderScores(tasks) {
+  const provider = (process.env.AI_PROVIDER || 'gemini').toLowerCase()
+  if (provider === 'gemini') return requestGeminiScores(tasks)
+  if (provider === 'openai') return requestOpenAiScores(tasks)
+  throw new ServiceError(503, 'AI_PROVIDER debe ser gemini u openai.')
+}
+
+export function createApp(scoreTasks = requestProviderScores) {
   const app = express()
   const allowedOrigins = new Set(
     (process.env.AI_ALLOWED_ORIGINS || 'http://localhost:5173,http://127.0.0.1:5173')
