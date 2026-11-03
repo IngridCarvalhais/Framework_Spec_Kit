@@ -1,0 +1,16 @@
+$kind: http-request
+url: "{{baseUrl}}/tasks/:id/comments"
+method: GET
+headers:
+  Accept: application/json
+pathVariables:
+  - key: id
+    value: <uuid>
+    description: "(Required) "
+auth:
+  type: bearer
+  credentials:
+    token: "{{bearerToken}}"
+settings: {}
+examples: ./.resources/Obtener comentarios de una tarea.resources/examples
+order: 1000

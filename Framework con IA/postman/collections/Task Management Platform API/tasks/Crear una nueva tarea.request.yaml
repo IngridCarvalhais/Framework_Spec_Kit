@@ -1,0 +1,24 @@
+$kind: http-request
+url: "{{baseUrl}}/tasks"
+method: POST
+headers:
+  Content-Type: application/json
+  Accept: application/json
+body:
+  type: json
+  content: |-
+    {
+      "project_id": "<uuid>",
+      "title": "<string>",
+      "description": "<string>",
+      "priority": "MEDIUM",
+      "assigned_to": "<uuid>",
+      "due_date": "<dateTime>"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{bearerToken}}"
+settings: {}
+examples: ./.resources/Crear una nueva tarea.resources/examples
+order: 2000

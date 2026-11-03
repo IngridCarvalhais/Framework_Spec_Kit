@@ -1,0 +1,4 @@
+$kind: collection
+description: Contrato de API REST para la plataforma de gestión de tareas con IA y colaboración.
+variables:
+  baseUrl: https://api.taskmanagement.local/v1

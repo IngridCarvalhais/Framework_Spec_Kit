@@ -1,0 +1,40 @@
+import type { Task } from '../../types/api'
+
+export const demoTasks: Task[] = [
+  {
+    id: '00000000-0000-4000-8000-000000000001',
+    project_id: 'demo-project',
+    title: 'Definir objetivos del sprint',
+    description: 'Alinear prioridades con el equipo.',
+    status: 'TODO',
+    priority: 'HIGH',
+    created_at: '2025-01-03T09:00:00.000Z',
+    due_date: '2025-01-20T00:00:00.000Z',
+    assigned_to: null,
+    ai_score: null,
+  },
+  {
+    id: '00000000-0000-4000-8000-000000000002',
+    project_id: 'demo-project',
+    title: 'Preparar prototipo',
+    description: 'Validar el flujo principal.',
+    status: 'IN_PROGRESS',
+    priority: 'MEDIUM',
+    created_at: '2025-01-04T10:00:00.000Z',
+    due_date: null,
+    assigned_to: null,
+    ai_score: null,
+  },
+  {
+    id: '00000000-0000-4000-8000-000000000003',
+    project_id: 'demo-project',
+    title: 'Revisar documentación',
+    description: 'La demostración usa datos locales.',
+    status: 'DONE',
+    priority: 'LOW',
+    created_at: '2025-01-01T10:00:00.000Z',
+    due_date: null,
+    assigned_to: null,
+    ai_score: null,
+  },
+]

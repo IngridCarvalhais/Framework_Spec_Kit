@@ -1,0 +1,69 @@
+### Variables
+@baseUrl = http://localhost:3000/api/v1
+@authToken = {{login.response.body.token}}
+@projectId = 123e4567-e89b-12d3-a456-426614174000
+
+### 1. Registro de usuario
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "name": "Usuario Test",
+  "email": "test@example.com",
+  "password": "Password123!"
+}
+
+###
+
+### 2. Login de usuario
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "Password123!"
+}
+
+###
+
+### 3. Crear Workspace
+POST {{baseUrl}}/workspaces
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "name": "Mi Espacio de Trabajo"
+}
+
+###
+
+### 4. Crear una Tarea
+# @name createTask
+POST {{baseUrl}}/tasks
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "project_id": "{{projectId}}",
+  "title": "Implementar especificación Spec-Kit",
+  "description": "Completar la especificación del Integrante 1",
+  "priority": "HIGH"
+}
+
+###
+
+### 5. Obtener Tareas del Proyecto
+GET {{baseUrl}}/projects/{{projectId}}/tasks?status=TODO
+Authorization: Bearer {{authToken}}
+
+###
+
+### 6. Añadir un comentario a la tarea
+POST {{baseUrl}}/tasks/{{createTask.response.body.id}}/comments
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "content": "Revisar los contratos OpenAPI antes de enviar al Integrante 2"
+}
