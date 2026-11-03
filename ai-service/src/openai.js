@@ -81,11 +81,17 @@ export async function requestOpenAiScores(tasks, {
     if (controller.signal.aborted) {
       throw new ServiceError(504, 'OpenAI superó el tiempo máximo de respuesta.')
     }
+    const networkCode = typeof error?.cause?.code === 'string' ? error.cause.code : ''
+    const errorName = error instanceof Error ? error.name : 'UnknownError'
     console.error('Falló la conexión con OpenAI:', {
-      name: error instanceof Error ? error.name : 'UnknownError',
-      code: error?.cause?.code,
+      name: errorName,
+      code: networkCode || undefined,
     })
-    throw new ServiceError(503, 'No se pudo conectar con OpenAI.')
+    const detail = networkCode || errorName
+    throw new ServiceError(
+      503,
+      `No se pudo conectar con OpenAI (${detail}). Comprueba la red del equipo y vuelve a intentarlo.`,
+    )
   } finally {
     clearTimeout(timeout)
   }
@@ -99,8 +105,14 @@ export async function requestOpenAiScores(tasks, {
   if (response.status === 404) {
     throw new ServiceError(503, 'OpenAI no reconoce el modelo configurado en OPENAI_MODEL.')
   }
+  if (response.status === 400) {
+    throw new ServiceError(502, 'OpenAI rechazó el formato de la solicitud. Comprueba el modelo configurado.')
+  }
+  if (response.status >= 500) {
+    throw new ServiceError(503, 'OpenAI está teniendo problemas; inténtalo de nuevo más tarde.')
+  }
   if (!response.ok) {
-    throw new ServiceError(503, 'OpenAI no está disponible o la configuración del proveedor no es válida.')
+    throw new ServiceError(502, `OpenAI rechazó la solicitud (HTTP ${response.status}).`)
   }
 
   try {
